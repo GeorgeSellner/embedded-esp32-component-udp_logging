@@ -84,6 +84,7 @@ int udp_logging_vprintf( const char *str, va_list l ) {
 		len = vsprintf((char*)buf, str, l);
 		if( (err = sendto(udp_log_fd, buf, len, 0, (struct sockaddr *)&serveraddr, sizeof(serveraddr))) < 0 )
 		{
+			show_socket_error_reason(err);
 			show_socket_error_reason(udp_log_fd);
 			vprintf("\nFreeing UDP Logging. sendto failed!\n", l);
 			udp_logging_free(l);
